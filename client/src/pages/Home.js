@@ -1,11 +1,13 @@
-import Nav from '../components/Nav.js';
 import React from 'react';
+import {Link} from 'react-router-dom';
+import '../styles/pageStyle.css'
 
 const Home= () => {
     return (
         <div>
-            <Nav/>
-            <div> Recipe of the month </div>
+            <Link to ="/"> 
+                <h1> Recipe of the month </h1>
+            </Link> 
         </div>
     );
     

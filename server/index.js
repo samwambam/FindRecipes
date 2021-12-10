@@ -1,6 +1,6 @@
 const express= require('express'); //routing, http requests
 const cors= require('cors'); //middleware, enables scripts running on 
-                            //browser client to interact with resources from different origin
+                             //browser client to interact with resources from different origin
 const mysql= require('mysql2');
 const app= express();
 

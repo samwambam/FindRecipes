@@ -5,16 +5,22 @@ import {
   Route,
 } from 'react-router-dom';
 import Home from './pages/Home.js';
+import Recipe from './pages/Recipe.js';
+import RecipePage from './pages/RecipePage.js'
+import Nav from './components/Nav.js'
 import './App.css';
 
 function App() {
-  return (
+  return ( 
+      <Router>
+        <Nav />
+        <Routes>
+          <Route path= "/" element= {<Home/>} exact/>
+          <Route path="/recipe" element= {<Recipe/>} exact />
+          <Route path= "/recipe/:id" element= {<RecipePage/>} exact />
+        </Routes>
+      </Router>
     
-    <Router>
-      <Routes>
-        <Route path= "/" element= {<Home/>}/>
-      </Routes>
-    </Router>
     
   );
 }

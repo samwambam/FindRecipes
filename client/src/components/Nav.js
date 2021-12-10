@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom'
 import '../App.css';
 import start from '../img/R.jfif';
 
@@ -11,9 +12,9 @@ const Nav= () => {
             </header>
       
             <ul className="bar"> 
-                <li> Recipe </li>
-                <li> ? </li>
-                <li> ? </li>
+                <Link to= "/"> <li> Home </li> </Link>
+                <Link to= "/recipe"> <li> Recipe </li> </Link> 
+                <button className="NavButton"> <li> Filter </li> </button>
             </ul>
       </div>
     );
