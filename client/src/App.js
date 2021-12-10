@@ -5,7 +5,7 @@ import {
   Route,
 } from 'react-router-dom';
 import Home from './pages/Home.js';
-import Recipe from './pages/Recipe.js';
+import Recipes from './pages/Recipes.js';
 import RecipePage from './pages/RecipePage.js'
 import Nav from './components/Nav.js'
 import './App.css';
@@ -16,7 +16,7 @@ function App() {
         <Nav />
         <Routes>
           <Route path= "/" element= {<Home/>} exact/>
-          <Route path="/recipe" element= {<Recipe/>} exact />
+          <Route path="/recipes" element= {<Recipes/>} exact />
           <Route path= "/recipe/:id" element= {<RecipePage/>} exact />
         </Routes>
       </Router>

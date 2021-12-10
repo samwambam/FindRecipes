@@ -12,9 +12,9 @@ const Nav= () => {
             </header>
       
             <ul className="bar"> 
-                <Link to= "/"> <li> Home </li> </Link>
-                <Link to= "/recipe"> <li> Recipe </li> </Link> 
-                <button className="NavButton"> <li> Filter </li> </button>
+                <Link to= "/"> <li className='list'> Home </li> </Link>
+                <Link to= "/recipes"> <li className='list'> Recipe </li> </Link> 
+                <button className="NavButton"> <li className='list'> Filter </li> </button>
             </ul>
       </div>
     );
