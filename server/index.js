@@ -31,37 +31,37 @@ app.get("/api/get", (req, res) => {
 
 //nutrition value
 app.get("api/recipe_nutritionValue", (req, res) => {
-
+    //id, name, amount, percentage
 });
 
 //ingredients
 app.get("api/recipe_ingredients", (req, res) => {
-
+    //id, name, amount, unitprice
 });
 
 //cooking method
 app.get("api/recipe_cookingMethod", (req, res) => {
-
+    //id, sequence, content
 });
 
 //allergy
 app.get("api/recipe_allergy", (req, res) => {
-
+    //id, allergy
 });
 
 //origin country
 app.get("api/recipe_country", (req, res) => {
-
+    //id, origin country
 });
 
 //recipe type
 app.get("api/recipe_type", (req, res) => {
-
+    //id, type
 });
 
 //cooking equipment
 app.get("api/cookingEquipment", (req, res) => {
-
+    //id, equipment name
 });
 
 //get review
