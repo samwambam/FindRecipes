@@ -33,3 +33,13 @@ a:visited{
     border: none;
     cursor: pointer;
 }
+
+.search {
+    background-color:sandybrown;
+    font-size: 15px;
+    color: white;
+    width: 80px;
+    border: none;
+    transition-duration: 0.5s;
+    cursor: pointer;
+}
