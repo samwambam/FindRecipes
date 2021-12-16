@@ -14,7 +14,7 @@ const Nav= () => {
             <ul className="bar"> 
                 <Link to= "/"> <li className='list'> Home </li> </Link>
                 <Link to= "/recipes"> <li className='list'> Recipe </li> </Link> 
-                <button className="NavButton"> <li className='list'> Filter </li> </button>
+                
             </ul>
       </div>
     );
