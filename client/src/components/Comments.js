@@ -25,7 +25,6 @@ const Comments = ({id}) => {
                     return (
                         <div key= {item.time}>
                             <p> {item.content} </p> 
-                            <p> made on {item.time} </p>
                         </div>
                     );
                 })

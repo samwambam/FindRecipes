@@ -24,10 +24,11 @@ const Home= () => {
     useEffect(() => {
         axios.get("http://localhost:7000/api/recipe_name", {
             params: {
-                id: {id}
+                id: id
             }
         }).then((res) => {
             setName(res.data[0].recipe_name);
+            setLoaded(true);
         }).catch((err) => {
 
         });
