@@ -43,3 +43,8 @@ a:visited{
     transition-duration: 0.5s;
     cursor: pointer;
 }
+
+.comment {
+    height: 30px;
+    width: 400px;
+}

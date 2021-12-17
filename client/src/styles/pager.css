@@ -13,3 +13,7 @@
     display: inline-block;
     color: hotpink;
 }
+
+li{
+    list-style-type: none;
+}
