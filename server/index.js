@@ -266,7 +266,7 @@ app.get("/api/get_recipe_ratings", (req, res) => {
     //recipe id, rank, score
     const id= req.query.id;
 
-    const sqlget= "SELECT score FROM Rating WHERE recipe_id=?";
+    const sqlget= "SELECT * FROM Rating WHERE recipe_id=?";
 
     connection.query(sqlget, [id], (err, result) => {
         res.send(result);
@@ -388,6 +388,8 @@ app.post("/api/set_recipe_review", (req, res) => {
    const score = req.body.score;
    const sqlpost1 = "INSERT INTO RecipeComment values(?, ?, ?, ?)";
    connection.query(sqlpost1, [comment_id, recipe_id, content, score], (err, result) =>{
+    res.send(result);
+    console.log(err);
    });
 });
 
@@ -395,21 +397,25 @@ app.post("/api/set_recipe_review", (req, res) => {
 app.post("/api/set_recipe_ratings", (req, res) => {
     //insert into 
     const recipe_id = req.body.recipe_id;
-    const rank = req.body.rank;
+    const pop = req.body.pop;
     const score = req.body.score;
     const sqlpost= "INSERT INTO Rating values(?, ?, ?)";
-    connection.query(sqlpost, [recipe_id, rank, score], (err, result) => {
+    connection.query(sqlpost, [recipe_id, pop, score], (err, result) => {
+        res.send(result);
+        console.log(err);
     });
 
 });
 
 //update ratings
-app.post("/api/update_recipe_ratings", (req, res) =>{
+app.put("/api/update_recipe_ratings", (req, res) =>{
     const recipe_id = req.body.recipe_id;
-    const rank = req.body.rank;
+    const pop = req.body.pop;
     const score = req.body.score;
-    const sqlpost = "UPDATE Rating SET rank = ?, score = ? WHERE recipe_id = ?";
-    connection.query(sqlpost, [rank, score, recipe_id], (err, result) =>{
+    const sqlpost = "UPDATE Rating SET popularity = ?, score = ? WHERE recipe_id = ?";
+    connection.query(sqlpost, [pop, score, recipe_id], (err, result) =>{
+        res.send(result);
+        console.log(err);
     });
 });
 
