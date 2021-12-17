@@ -8,10 +8,10 @@ app.use(express.json()); //parse incoming requests to JSON
 app.use(cors());
 
 const connection= mysql.createPool({
-    host: "localhost",
-    user: "root",
-    password: "Skrsquel666",
-    database: "recipee"
+    host: "",
+    user: "",
+    password: "",
+    database: ""
 })
 
 //-------------------------------------------------------------------------------------------------
@@ -39,7 +39,7 @@ app.get("/api/password", (req,res) => {
     connection.query(sqlget, [id], (err,result) =>{
         res.send(result);
         console.log(err);
-    })
+    });
 });
 
 //get preference
@@ -49,16 +49,15 @@ app.get("/api/password", (req,res) => {
 //get highest ranked recipe
 app.get("/api/highest_ranked", (req, res) => {
     //rating is the most
-    //max (rank)
-    const id = req.query.id;
-    const sqlget = "SECLECT recipe_id, rank from Rating WHERE rank = 1";
+    //max()
+    const sqlget = "SELECT MAX(score) as max_score, recipe_id FROM Rating GROUP BY recipe_id ORDER BY max_score DESC";
+    //select recipe_id, score from Rating where score= (select max(score) from rating)
     
-    connection.query(sqlget, [id], (err,result) =>{
+    connection.query(sqlget, (err,result) =>{
         res.send(result);
         console.log(err);
-    })
+    });
 });
-
 //recipes 
 //get all recipe names
 app.get("/api/all_recipe_name", (req, res) => {
@@ -95,7 +94,7 @@ app.get("/api/all_recipe_ingredients", (req, res) => {
     connection.query(sqlget, (err,result) => {
         res.send(result);
         console.log(err);
-    })
+    });
 });
 
 //ingredients
@@ -107,7 +106,7 @@ app.get("/api/recipe_ingredients", (req, res) => {
     connection.query(sqlget, [id], (err,result) => {
         res.send(result);
         console.log(err);
-    })
+    });
 });
 
 //cooking method
@@ -131,7 +130,7 @@ app.get("/api/all_recipe_allergy", (req, res) => {
     connection.query(sqlget, (err, result) =>{
         res.send(result);
         console.log(err);
-    })
+    });
 });
 
 //recipe allergy
@@ -143,11 +142,11 @@ app.get("/api/recipe_allergy", (req, res) => {
     connection.query(sqlget, [id], (err, result) =>{
         res.send(result);
         console.log(err);
-    })
+    });
 });
 
 //client allergy
-app.get("/app/client_allergy"), (req,res) => {
+app.get("/app/client_allergy", (req,res) => {
     //client_id, allergy
     const id = req.query.id
     const sqlget = "SELECT client_id, allergy FROM Client WHERE client_id = ?";
@@ -155,8 +154,8 @@ app.get("/app/client_allergy"), (req,res) => {
     connection.query(sqlget, [id], (err, result) => {
         res.send(result);
         console.log(err);
-    })
-}
+    });
+});
 
 //get all countries
 app.get("/api/all_recipe_country", (req, res) => {
@@ -206,7 +205,14 @@ app.get("/api/recipe_type", (req, res) => {
 
 //cooking equipment
 app.get("/api/cookingEquipment", (req, res) => {
-    //id, equipment name
+    //recipe_id, equipment_name
+    const id= req.query.id;
+
+    const sqlget= "select equipment_name from RecipeCookingEquipment where recipe_id= ?";
+    connection.query(sqlget, [id], (err, result) => {
+        res.send(result);
+        console.log(err);
+    });
 });
 
 //get review
@@ -222,7 +228,7 @@ app.get("/api/get_recipe_review", (req, res) => {
 });
 
 //get all app feedback
-app.get("/api/get_all_app_feedback"), (req,res) => {
+app.get("/api/get_all_app_feedback", (req,res) => {
     //
     const id = req.query.id;
     const sqlget = "SELECT feedback_id, content, type FROM AppFeedback"
@@ -230,30 +236,30 @@ app.get("/api/get_all_app_feedback"), (req,res) => {
     connection.query(sqlget, [id],(err, result) =>{
         res.send(result);
         console.log(err);
-    })
-}
+    });
+});
 
 //get app feedback by feedback_id
-app.get("/api/get_app_feedback_byId"), (req,res) =>{
+app.get("/api/get_app_feedback_byId", (req,res) =>{
     const id = req.query.id;
     const sqlget = "SELECT feedback_id, content, type FROM AppFeedback WHERE feedback_id = ?";
 
     connection.query(sqlget, [id], (err,result) =>{
         res.send(result);
         console.log(err);
-    })
-}
+    });
+});
 
 //get app feedback by type
-app.get("/api/get_app_feedback_byType"), (req,res) =>{
+app.get("/api/get_app_feedback_byType", (req,res) =>{
     const type = req.query.id;
     const sqlget = "SELECT feedback_id, content, type FROM AppFeedback WHERE type = ?";
 
     connection.query(sqlget, [id], (err,result) =>{
         res.send(result);
         console.log(err);
-    })
-}
+    });
+});
 
 //get ratings
 app.get("/api/get_recipe_ratings", (req, res) => {
@@ -267,10 +273,12 @@ app.get("/api/get_recipe_ratings", (req, res) => {
         console.log(err);
     });
 });
+
 //-------------------------------------------------------------------------------------------------
 //set client
 app.post("/api/set_user_client", (req, res) => {
-    const user_id;
+    /*
+    const user_id; //req.body
     const name;
     const password;
     const email;
@@ -280,12 +288,14 @@ app.post("/api/set_user_client", (req, res) => {
     const sqlpost2 = "INSERT INTO Client() values(?, ?, ?)";
 
     connection.query(sqlpost1, [user_id, name, password, email], (err,result) => {
-    })
+    });
     connection.query(sqlpost2, [user_id, Preference, allergy], (err,result) => {
-    })
-})
+    });
+    */
+});
 //set admin
-app.post("/api/set_user_admin"), (req, res) =>{
+app.post("/api/set_user_admin", (req, res) =>{
+    /*
     const user_id;
     const name;
     const password;
@@ -296,21 +306,25 @@ app.post("/api/set_user_admin"), (req, res) =>{
     const sqlpost2 = "INSERT INTO Admin() values(?, ?, ?)";
 
     connection.query(sqlpost1, [user_id, name, password, email], (err, result) =>{
-    })
+    });
     connection.query(sqlpost2, [user_id, job, office_hour], (err,result) => {
-    })
-}
+    });
+    */
+});
 //set client cooking equipment
 app.post("/api/set_client_cooking_equipment", (req,res) =>{
+    /*
     const client_id;
     const equipment_name;
     const sqlpost = "INSERT INTO ClientCookingEquipment() values(?, ?)";
     connection.query(sqlpost, [client_id, equipment_name], (err,result) =>{
         
-    })
-})
+    });
+    */
+});
 //set recipes
 app.post("/api/set_recipes", (req,res) =>{
+    /*
     const recipe_id;
     const recipe_name;
     const type;
@@ -322,47 +336,43 @@ app.post("/api/set_recipes", (req,res) =>{
     const sqlpost2 = "INSERT INTO CookingMethod() values(?, ?)";
     const sqlpost3 = "INSERT INTO Ingredients() values(?, ?)";
     connection.query(sqlpost1, [recipe_id, recipe_name, type, origin_country, reference], (err,result) => {
-    })
+    });
     connection.query(sqlpost2, [recipe_id, cooking_method_content], (err,result) => {
-    })
+    });
     connection.query(sqlpost3, [recipe_id, ingredients_content], (err,result) => {
-    })
-})
+    });
+    */
+});
 
 //set recipe cooking equipment
 app.post("/api/set_recipe_cooking_equipment", (req,res) =>{
+    /*
     const recipe_id;
     const equipment_name;
     const sqlpost = "INSERT INTO RecipeCookingEquipment() values(?, ?)";
     connection.query(sqlpost, [recipe_id, equipment_name], (err,result) =>{
         
-    })
-})
+    });
+    */
+});
 
 //set app feedback
 app.post("/api/set_app_feedback", (req,res) =>{
+    /*
     const feedback_id;
     const content;
     const type;
     const sqlpost = "INSERT INTO AppFeedback() values(?, ?, ?)";
     connection.query(sqlpost, [feedback_id, content, type], (err, result) =>{
-    })
-})
-
-
-
-
-
-
-
-
-
+    });
+    */
+});
 
 
 //set review
 app.post("/api/set_recipe_review", (req, res) => {
     //insert into table_name(attributes) values (req.body.content)
-    //comment id, recipe id, content, score, time
+    //comment id NOT NULL, recipe idNOT NULL, content NOT NULL, score, time NOT NULL
     /* 
     const content = req.body.content;
     const score= req.body.score;
@@ -372,27 +382,41 @@ app.post("/api/set_recipe_review", (req, res) => {
 
     })
     */
-   const comment_id = req.body.comment_id;
+   const comment_id = req.body.comment_id; 
    const recipe_id = req.body.recipe_id;
    const content = req.body.content;
    const score = req.body.score;
-   const sqlpost = "INSERT INTO RecipeComment() values(?, ?, ?, ?)";
-   connection.query(sqlpost, [comment_id, recipe_id, content, score], (err, result) =>{
-   })
-
+   const sqlpost1 = "INSERT INTO RecipeComment values(?, ?, ?, ?)";
+   connection.query(sqlpost1, [comment_id, recipe_id, content, score], (err, result) =>{
+   });
 });
 
 //set ratings
 app.post("/api/set_recipe_ratings", (req, res) => {
     //insert into 
     const recipe_id = req.body.recipe_id;
-    const rank = req.body.rankl
-    const score = req.body.score
-    const sqlpost= "INSERT INTO Rating() values(?, ?, ?)";
+    const rank = req.body.rank;
+    const score = req.body.score;
+    const sqlpost= "INSERT INTO Rating values(?, ?, ?)";
     connection.query(sqlpost, [recipe_id, rank, score], (err, result) => {
-    })
+    });
 
 });
+
+//update ratings
+app.post("/api/update_recipe_ratings", (req, res) =>{
+    const recipe_id = req.body.recipe_id;
+    const rank = req.body.rank;
+    const score = req.body.score;
+    const sqlpost = "UPDATE Rating SET rank = ?, score = ? WHERE recipe_id = ?";
+    connection.query(sqlpost, [rank, score, recipe_id], (err, result) =>{
+    });
+});
+
+
+
+
+
 app.listen(7000, () =>{ //bind and listen to connections of host and port
     console.log("hello");
 });
