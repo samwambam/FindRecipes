@@ -244,7 +244,7 @@ const Recipes = () => {
 
         filteredDisplay.push(ing);
 
-        console.log("filtered", filteredDisplay);
+        //console.log("filtered", filteredDisplay);
         
         setDisplay(filteredDisplay.flat());
     }
@@ -257,7 +257,7 @@ const Recipes = () => {
                 list.push(recipeInfo);
             }
         }); 
-        console.log("new display list", list);
+        //console.log("new display list", list);
         setActualdisplay(list);
     }, [display]);
 

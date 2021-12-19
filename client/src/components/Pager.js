@@ -15,7 +15,7 @@ const Pager = ({ items, pageCount }) => {
     }, []);
 
     useEffect(() => {
-        console.log("page items changed", items);
+        //console.log("page items changed", items);
         setPageitems(items);
     },[items]);
 
@@ -41,7 +41,6 @@ const Pager = ({ items, pageCount }) => {
     }
 
     const pageClick = (e, pageNo) => {
-        //e.preventDefault();
         //calculate(pageNo);
         if (current === 1 && pageNo <= 1) {
             setCurrent(1);
