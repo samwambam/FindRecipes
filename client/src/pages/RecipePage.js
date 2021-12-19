@@ -17,8 +17,10 @@ const RecipePage = () => {
     const [allergy, setAllergy]= useState([]);
     const [country, setOC]= useState([]);
     const [cooking_equipment, setCE]= useState([]);
+
     const [avgRating, setavgRating]= useState(0);
-    const [userRate, setUserrate]= useState(1);
+    const [popular, setPopular]= useState(0);
+    const [userRate, setUserrate]= useState(0);
     const [commentContent, setComment]= useState("");
 
     useEffect(() => {
@@ -90,6 +92,7 @@ const RecipePage = () => {
         }).then((res) => {
             const toNumRating= res.data[0].score //------------------------------------uh
             setavgRating(toNumRating);
+            setPopular(res.data[0].popularity);
         }).catch((err) => {
 
         });
@@ -104,13 +107,13 @@ const RecipePage = () => {
         }).catch((err) => {
 
         });
-        
+
     }, []);
 
 
     const rated = (e) => {
         
-        //console.log(e.target.value);
+        //console.log("user rate", Number(e.target.value));
         var amount= 0;
         axios.get("http://localhost:7000/api/get_recipe_review", {
             params: {
@@ -118,47 +121,55 @@ const RecipePage = () => {
             }
         }).then((res) => {
             amount= res.data.length;
+            console.log("length", amount);
         }).catch((err) => {
 
         });
 
-        const newRating= Math.ceil(((avgRating*amount)+userRate)/(amount+1));
+        const newPopularity= popular+1;
+        const newRating= Math.ceil(((avgRating*amount)+Number(e.target.value))/(amount+1));
+        console.log("new rating", newRating);
         //axios.post the rating
-        axios.post("http://localhost:7000/api/update_recipe_ratings", {
-            recipe_id: {id},
-            rank: 2,
+        axios.put("http://localhost:7000/api/update_recipe_ratings", {
+            recipe_id: id,
+            pop: newPopularity,
             score: newRating 
         }).then((res) => {
-
+            //setavgRating(res.data[0].score);
+            //console.log("put grab new", res);
         }).catch((err) => {
 
         });
-        setUserrate(e.target.value);
+        setUserrate(Number(e.target.value));
         
     }
 
     useEffect(() => {
+        //console.log("new rating");
+        
         axios.get("http://localhost:7000/api/get_recipe_ratings", {
             params: {
                 id: Number(id)
             }
         }).then((res) => {
             const toNumRating= res.data[0].score //------------------------------------uh
+            console.log("grab new", toNumRating);
             setavgRating(toNumRating);
         }).catch((err) => {
 
         });
+        
     }, [userRate]);
 
     
     const postComment = () => {
-        const randid= 11 + Math.random() * (1000-11);
-        const randscore= 1 + Math.random() * (5-1);
+        const randid= 11 + parseInt(Math.random() * (1000-11));
+        const randscore= 1 + parseInt(Math.random() * (5-1));
 
-        axios.post("hhtp://localhost:7000/api/set_recipe_review", {
+        axios.post("http://localhost:7000/api/set_recipe_review", {
             comment_id: randid,
             recipe_id: id,
-            content: {commentContent},
+            content: commentContent,
             score: randscore
         }).then((res) => {
 
