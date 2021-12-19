@@ -44,8 +44,6 @@ h1{
   border: none;
   float: right;
   background-color: chocolate;
-  transition-duration: 0.5s;
-  cursor: pointer;
 }
 
 button:hover {
